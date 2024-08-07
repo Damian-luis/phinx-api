@@ -1,0 +1,10 @@
+version: '3'
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    command: sh -c "npm run build && npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d dist/data-source.js && npm run start:dev"
+
