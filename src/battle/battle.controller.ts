@@ -1,5 +1,5 @@
 // src/battle/battle.controller.ts
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body,Get } from '@nestjs/common';
 import { BattleService } from './battle.service';
 
 @Controller('battle')
@@ -10,4 +10,10 @@ export class BattleController {
   battle(@Body() body: { pokemon1Id: string; pokemon2Id: string }) {
     return this.battleService.battle(body.pokemon1Id, body.pokemon2Id);
   }
+
+  @Get()
+  findAll() {
+    return this.battleService.findAll();
+  }
+
 }

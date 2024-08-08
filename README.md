@@ -22,52 +22,61 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Phinx Pokémon Battle Application
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Esta es una aplicación de batalla de Pokémon desarrollada con NestJS para Phinx.
 
-## Installation
+## Requisitos
 
-```bash
-$ npm install
-```
+- Node.js (versión 16 o superior)
+- npm (versión 7 o superior)
+- Docker (opcional para la configuración de contenedores)
 
-## Running the app
+## Instalación
 
-```bash
-# development
-$ npm run start
+Para instalar las dependencias necesarias, ejecuta el siguiente comando:
 
-# watch mode
-$ npm run start:dev
 
-# production mode
-$ npm run start:prod
-```
+npm install
 
-## Test
+npm run migrate
 
-```bash
-# unit tests
-$ npm run test
+npm run dev
 
-# e2e tests
-$ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
-```
+La aplicaciòn se levantarà en el puerto 5000
 
-## Support
+## Endpoints Disponibles
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Listar Pokémon
 
-## Stay in touch
+http://localhost:5000/pokemon   GET
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Descripción: Obtiene la lista de todos los Pokémon.
 
-## License
 
-Nest is [MIT licensed](LICENSE).
+
+
+Iniciar Batalla
+
+http://localhost:5000/battle  POST
+
+
+Descripción: Inicia una batalla entre dos Pokémon.
+Cuerpo de la solicitud:
+
+{
+  "pokemon1Id": "id_del_pokemon_1",
+  "pokemon2Id": "id_del_pokemon_2"
+}
+
+
+
+Listar Batallas
+
+http://localhost:5000/battle  GET
+
+
+Descripción: Obtiene la lista de todas las batallas realizadas.
+
+

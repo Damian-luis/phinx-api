@@ -66,4 +66,10 @@ export class BattleService {
 
     return this.battleRepository.save(battle);
   }
+
+  async findAll(): Promise<Battle[]> {
+    const battles = await this.battleRepository.find();
+    return battles;
+  }
+
 }
