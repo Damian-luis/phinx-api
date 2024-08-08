@@ -17,15 +17,7 @@ export class BattleService {
     const pokemon1 = await this.pokemonService.findOne(pokemon1Id);
     const pokemon2 = await this.pokemonService.findOne(pokemon2Id);
 
-    const turns = [
-      {
-        attacker: pokemon1.name,
-        defender: pokemon2.name,
-        damage: 0,
-        attackerRemainingHp: pokemon1.hp,
-        defenderRemainingHp: pokemon2.hp,
-      }
-    ];
+    const turns = [];
 
     let firstAttacker = pokemon1.speed > pokemon2.speed ? pokemon1 : pokemon2;
     let secondAttacker = firstAttacker === pokemon1 ? pokemon2 : pokemon1;
@@ -59,6 +51,8 @@ export class BattleService {
         attackerRemainingHp: secondAttacker.hp,
         defenderRemainingHp: pokemon1.hp,
       });
+
+      if (pokemon1.hp <= 0) break;
     }
 
     const winner = pokemon1.hp > 0 ? pokemon1 : pokemon2;

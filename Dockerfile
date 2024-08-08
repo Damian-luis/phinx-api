@@ -1,30 +1,20 @@
-FROM node:16
+# Usar una imagen oficial de Node.js como la imagen base
+FROM node:14
 
+# Establecer el directorio de trabajo en /app
 WORKDIR /app
 
-# Copia los archivos de package.json y package-lock.json
+# Copiar package.json y package-lock.json
 COPY package*.json ./
 
-# Instala las dependencias
+# Instalar las dependencias
 RUN npm install
 
-# Instala sqlite3 explícitamente
-RUN npm install sqlite3
-
-# Copia todos los archivos del proyecto
+# Copiar el resto de los archivos de la aplicación
 COPY . .
 
-# Construye el proyecto
-RUN npm run build
-
-# Mostrar el contenido de la carpeta dist para depuración
-RUN ls -la dist
-
-# Mostrar todas las dependencias instaladas para depuración
-RUN npm list
-
-# Expone el puerto 3000
+# Exponer el puerto que la aplicación utiliza
 EXPOSE 3000
 
-# Comando para iniciar la aplicación
-CMD ["sh", "-c", "ls -la node_modules/sqlite3 && ls -la dist && cat dist/data-source.js && npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d dist/data-source.js && npm run start:dev"]
+# Ejecutar migraciones y luego iniciar la aplicación
+CMD ["sh", "-c", "npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/data-source.ts && npx ts-node -r tsconfig-paths/register src/main.ts"]

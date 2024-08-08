@@ -1,10 +1,31 @@
-version: '3'
+version: '3.8'
+
 services:
   backend:
-    build: .
-    ports:
-      - "3000:3000"
+    build:
+      context: .
     volumes:
       - .:/app
-    command: sh -c "npm run build && npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d dist/data-source.js && npm run start:dev"
+      - /app/node_modules
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
 
+  frontend:
+    build:
+      context: ./pokemon-battle
+    volumes:
+      - ./pokemon-battle:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  db:
+    image: sqlite
+    volumes:
+      - ./sqlite:/var/lib/sqlite
+    environment:
+      SQLITE_DATABASE: 'pokemon-battle.db'
