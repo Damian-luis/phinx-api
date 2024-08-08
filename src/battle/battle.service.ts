@@ -56,12 +56,14 @@ export class BattleService {
     }
 
     const winner = pokemon1.hp > 0 ? pokemon1 : pokemon2;
+    const loser = winner === pokemon1 ? pokemon2 : pokemon1;
 
     const battle = new Battle();
     battle.pokemon1Id = pokemon1Id;
     battle.pokemon2Id = pokemon2Id;
     battle.winnerId = winner.id;
     battle.winnerName = winner.name;
+    battle.loserName = loser.name;
     battle.turns = turns;
 
     return this.battleRepository.save(battle);

@@ -17,7 +17,10 @@ export class Battle {
 
   @Column()
   winnerName: string;
-
+  
+  @Column()
+  loserName: string;
+  
   @Column('json')
   turns: {
     attacker: string | null;
