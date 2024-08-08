@@ -1,20 +1,21 @@
-# Usar una imagen oficial de Node.js como la imagen base
-FROM node:14
+# Use an official Node.js runtime as a parent image
+FROM node:16
 
-# Establecer el directorio de trabajo en /app
+# Set the working directory
 WORKDIR /app
 
-# Copiar package.json y package-lock.json
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Instalar las dependencias
+# Install app dependencies
+RUN npm install sqlite3 --save
 RUN npm install
 
-# Copiar el resto de los archivos de la aplicación
+# Copy the rest of the application code
 COPY . .
 
-# Exponer el puerto que la aplicación utiliza
+# Expose the port the app runs on
 EXPOSE 3000
 
-# Ejecutar migraciones y luego iniciar la aplicación
-CMD ["sh", "-c", "npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/data-source.ts && npx ts-node -r tsconfig-paths/register src/main.ts"]
+# Default command to run migrations and then start the app
+CMD ["sh", "-c", "npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run && npx ts-node -r tsconfig-paths/register src/main.ts"]

@@ -2,30 +2,22 @@ version: '3.8'
 
 services:
   backend:
-    build:
-      context: .
+    build: .
+    container_name: pokemon-battle-backend
+    ports:
+      - "3000:3000"
     volumes:
       - .:/app
-      - /app/node_modules
-    ports:
-      - "3001:3000"
     depends_on:
       - db
 
-  frontend:
-    build:
-      context: ./pokemon-battle
-    volumes:
-      - ./pokemon-battle:/app
-      - /app/node_modules
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-
   db:
-    image: sqlite
+    image: nouchka/sqlite3
+    container_name: pokemon-battle-db
     volumes:
-      - ./sqlite:/var/lib/sqlite
-    environment:
-      SQLITE_DATABASE: 'pokemon-battle.db'
+      - sqlite-db:/data
+
+volumes:
+  sqlite-db:
+
+
